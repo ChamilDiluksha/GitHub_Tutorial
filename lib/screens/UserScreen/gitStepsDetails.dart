@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github_tutorial/Models/gitmodel.dart';
+import 'package:github_tutorial/Widgets/UserNavDrawer.dart';
+import 'package:github_tutorial/screens/UserScreen/gitHubSteps.dart';
 
 class StepDetails extends StatefulWidget {
 
@@ -15,6 +17,7 @@ class _StepDetailsState extends State<StepDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: UserNav(),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:github_tutorial/Models/gitmodel.dart';
 
+import 'UserNavDrawer.dart';
+
 class seeALLSteps extends StatefulWidget {
 
   final List<Gitmodel> items;
@@ -16,6 +18,7 @@ class _seeALLStepsState extends State<seeALLSteps> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: UserNav(),
       backgroundColor: const Color(0xFF212121),
       body: ListView(
         children: <Widget>[
@@ -88,7 +91,7 @@ class _seeALLStepsState extends State<seeALLSteps> {
                                 ),
                               ),
                               title: Text(
-                                '${index + 1} Step : ${widget.items[index].command}',
+                                'Step ${index + 1} : ${widget.items[index].command}',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 22,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github_tutorial/Models/gitmodel.dart';
 import 'package:github_tutorial/Utils/DBHelper.dart';
+import 'package:github_tutorial/Widgets/UserNavDrawer.dart';
 import 'package:github_tutorial/Widgets/stepsLIstWidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,6 +21,7 @@ class _gitHubStepsState extends State<gitHubSteps> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+        drawer: UserNav(),
         body: ListView(
           padding: EdgeInsets.symmetric(vertical: 28),
           children: <Widget>[
@@ -52,7 +54,7 @@ class _gitHubStepsState extends State<gitHubSteps> {
                                 color: Colors.white,
                               ),
                               onPressed: () {
-                                _logoutHandler(context);
+                                _logout(context);
                               },
                             ),
                           ],
@@ -87,7 +89,7 @@ class _gitHubStepsState extends State<gitHubSteps> {
   }
 
 
-  _logoutHandler(BuildContext context) async {
+  _logout(BuildContext context) async {
     final token = await SharedPreferences.getInstance();
     final name = token.getString("Name");
 
