@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github_tutorial/Models/gitmodel.dart';
 import 'package:github_tutorial/Utils/DBHelper.dart';
+import 'package:github_tutorial/Widgets/NavDrawer.dart';
 
 import 'AdminHome.dart';
 
@@ -52,6 +53,7 @@ class _addGitStepsState extends State<addGitSteps> {
           },
         ),
       ),
+      drawer: NavDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
