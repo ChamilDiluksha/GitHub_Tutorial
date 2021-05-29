@@ -71,7 +71,7 @@ class _UserNavState extends State<UserNav> {
                     ),
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color(0xFF303030),Color(0xFF212121)],
+                          colors: [Colors.black,Colors.black],
                           end: Alignment.bottomCenter,
                           begin: Alignment.topCenter,
                         )

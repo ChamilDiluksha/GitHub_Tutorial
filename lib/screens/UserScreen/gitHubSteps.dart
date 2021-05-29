@@ -42,7 +42,7 @@ class _gitHubStepsState extends State<gitHubSteps> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
@@ -64,11 +64,11 @@ class _gitHubStepsState extends State<gitHubSteps> {
                           height: 125,
                           width: 125,
                         ),
-                        SizedBox(width: 5.0),
+                        SizedBox(height: 20.0),
                         Text(
                           'Git Hub Tutorial',
                           style: TextStyle(
-                            fontSize: 40.0,
+                            fontSize: 30.0,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),

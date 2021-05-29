@@ -47,7 +47,7 @@ class _stepsLIstWidgetState extends State<stepsLIstWidget> {
               Text(
                 'Step by Step ',
                 style: TextStyle(
-                  fontSize: 22.0,
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.5,
                 ),
@@ -66,7 +66,7 @@ class _stepsLIstWidgetState extends State<stepsLIstWidget> {
                   'See All Steps',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 16.0,
+                    fontSize: 15.0,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1.0,
                   ),
@@ -118,7 +118,7 @@ class _stepsLIstWidgetState extends State<stepsLIstWidget> {
                         child: Container(
                           height: 300.0,
                           width: 300.0,
-                          color: Colors.black26,
+                          color: Color(0xFFBDBDBD),
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 20.0, top: 10.0, left: 10.0, right: 10.0),
                             child: Column(
@@ -182,7 +182,7 @@ class _stepsLIstWidgetState extends State<stepsLIstWidget> {
                               child: Container(
                                 height: 120.0,
                                 width: 300.0,
-                                color: Colors.black54,
+                                color: Color(0xFF616161),
                               ),
                             ),
                             Positioned(

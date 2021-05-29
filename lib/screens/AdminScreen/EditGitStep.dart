@@ -144,7 +144,7 @@ class _EditGitStepState extends State<EditGitStep> {
   _displaySuccess(BuildContext context) {
     final snackBar = SnackBar(
       content: Text("Successfully Updated"),
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.black,
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
