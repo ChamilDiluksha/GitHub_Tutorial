@@ -81,7 +81,7 @@ class _seeALLStepsState extends State<seeALLSteps> {
                               leading: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    color: Colors.white10
+                                    color: Colors.white
                                 ),
                                 padding:  EdgeInsets.all(6),
                                 child: Image.asset(
