@@ -26,24 +26,19 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() {
       _dbHelper = DatabaseHelper.instance;
     });
-
-    _refreshContactList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         child: Column(
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height*0.3,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Color(0xFF303030), Color(0xFF212121)],
-                    end: Alignment.bottomCenter,
-                    begin: Alignment.topCenter
-                ),
+                color: Colors.black,
                 borderRadius:
                 BorderRadius.only(bottomLeft: Radius.circular(40)),
               ),
@@ -55,9 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
-
             _form(),
-            _list()
           ],
         ),
       ),
@@ -65,6 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   _form() => Container(
+    margin: const EdgeInsets.only(top: 85),
     color: Colors.white,
     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
     child: Form(
@@ -76,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
               style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold)
           ),
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: EdgeInsets.only(top: 60),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(50)),
               color: Color(0xFFEEEEEE),
@@ -86,12 +80,12 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 labelText: 'Username or Email',
                 labelStyle: TextStyle(
-                    color: Color(0xFF212121),
+                  color: Colors.black,
                 ),
                 prefixIcon: Icon(
-                    Icons.account_circle,
-                    color: Color(0xFF212121),
-                    size: 30,
+                  Icons.account_circle,
+                  color: Colors.black,
+                  size: 30,
                 ),
                 border: InputBorder.none,
               ),
@@ -101,7 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: EdgeInsets.only(top: 40),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(50)),
               color: Color(0xFFEEEEEE),
@@ -109,15 +103,15 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: EdgeInsets.only(left: 10),
             child: TextFormField(
               decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(
-                    color: Color(0xFF212121),
-                  ),
-                  prefixIcon: Icon(
-                    Icons.vpn_key,
-                    color: Color(0xFF212121),
-                    size: 30,
-                  ),
+                labelText: 'Password',
+                labelStyle: TextStyle(
+                  color: Colors.black,
+                ),
+                prefixIcon: Icon(
+                  Icons.vpn_key,
+                  color: Colors.black,
+                  size: 30,
+                ),
                 border: InputBorder.none,
               ),
               obscureText: true,
@@ -126,20 +120,20 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 50.0),
+            margin: const EdgeInsets.only(top: 80.0),
             child: SizedBox(
               width: double.infinity,
               height: 50,
               child: RaisedButton(
-                color: Color(0xFF303030),
+                color: Colors.black,
                 textColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20))
+                    borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
                 onPressed: () => _onSubmit(),
                 child: Text(
-                    'Register',
-                    style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),
+                  'Register',
+                  style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -149,17 +143,17 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               Container(
                 margin:
-                EdgeInsets.only(top: 10),
+                EdgeInsets.only(top: 40),
                 child: Text(
                   'Already Registred?',
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 5, top:10),
+                margin: const EdgeInsets.only(left: 5, top:40),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => LoginPage())
+                        context, MaterialPageRoute(builder: (context) => LoginPage())
                     );
                   },
                   child: Text(
@@ -179,24 +173,15 @@ class _RegisterPageState extends State<RegisterPage> {
     ),
   );
 
-  _refreshContactList() async {
-    List<User>  x = await _dbHelper.fetchUsers();
-
-    setState(() {
-      _users = x;
-    });
-  }
-
   _onSubmit() async {
     var form = _formKey.currentState;
 
     if (form.validate()) {
       form.save();
       await _dbHelper.insertContact(_user);
-      _refreshContactList();
+      _displaySuccess(context);
       form.reset();
     }
-
   }
 
   _list() => Expanded(
@@ -243,4 +228,13 @@ Widget _textInput({controller, hint, icon}) {
       textInputAction: TextInputAction.done,
     ),
   );
+}
+
+_displaySuccess(BuildContext context) {
+  final snackBar = SnackBar(
+    content: Text('Registration Success..'),
+    backgroundColor: Colors.grey,
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

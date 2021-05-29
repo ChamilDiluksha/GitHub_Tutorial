@@ -19,7 +19,7 @@ class _seeALLStepsState extends State<seeALLSteps> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: UserNav(),
-      backgroundColor: const Color(0xFF212121),
+      backgroundColor: Colors.black,
       body: ListView(
         children: <Widget>[
           Container(

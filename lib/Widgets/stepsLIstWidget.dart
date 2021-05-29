@@ -77,7 +77,7 @@ class _stepsLIstWidgetState extends State<stepsLIstWidget> {
         ),
         SizedBox(height: 15.0,),
         Container(
-          height: 400.0,
+          height: 450.0,
           child: _StepList(context, _gitmodels),
         ),
       ],
@@ -116,11 +116,11 @@ class _stepsLIstWidgetState extends State<stepsLIstWidget> {
                           top: const Radius.circular(25.0),
                         ),
                         child: Container(
-                          height: 250.0,
+                          height: 300.0,
                           width: 300.0,
                           color: Colors.black26,
                           child: Padding(
-                            padding: EdgeInsets.all(10.0),
+                            padding: EdgeInsets.only(bottom: 20.0, top: 10.0, left: 10.0, right: 10.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +132,7 @@ class _stepsLIstWidgetState extends State<stepsLIstWidget> {
                                     style: TextStyle(
                                       fontSize: 22.0,
                                       color: Colors.white,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w900,
                                       letterSpacing: 1.2,
                                     ),
                                   ),
@@ -146,7 +146,7 @@ class _stepsLIstWidgetState extends State<stepsLIstWidget> {
                                         style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w600,
-                                          color: Colors.white,
+                                          color: Colors.black,
                                         ),),
                                     ],
                                   ),
@@ -199,7 +199,7 @@ class _stepsLIstWidgetState extends State<stepsLIstWidget> {
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20.0,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w900,
                                         letterSpacing: 1.2,
                                       ),
                                     ),

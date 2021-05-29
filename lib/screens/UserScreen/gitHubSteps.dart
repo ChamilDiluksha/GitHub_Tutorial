@@ -34,7 +34,7 @@ class _gitHubStepsState extends State<gitHubSteps> {
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF303030),Color(0xFF212121)],
+                      colors: [Colors.black,Colors.black],
                       end: Alignment.bottomCenter,
                       begin: Alignment.topCenter,
                     )

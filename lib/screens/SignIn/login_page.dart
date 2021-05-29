@@ -30,24 +30,19 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _dbHelper = DatabaseHelper.instance;
     });
-
-    _refreshContactList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         child: Column(
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height*0.3,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Color(0xFF303030), Color(0xFF212121)],
-                    end: Alignment.bottomCenter,
-                    begin: Alignment.topCenter
-                ),
+                color: Colors.black,
                 borderRadius:
                 BorderRadius.only(bottomLeft: Radius.circular(40)),
               ),
@@ -59,9 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
             _form(),
-            _list()
           ],
         ),
       ),
@@ -69,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _form() => Container(
+    margin: const EdgeInsets.only(top: 75),
     color: Colors.white,
     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
     child: Form(
@@ -80,9 +74,9 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold)
           ),
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: EdgeInsets.only(top: 60),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+              borderRadius: BorderRadius.all(Radius.circular(40)),
               color: Color(0xFFEEEEEE),
             ),
             padding: EdgeInsets.only(left: 10),
@@ -90,11 +84,11 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 labelText: 'Username or Email',
                 labelStyle: TextStyle(
-                  color: Color(0xFF212121),
+                  color: Colors.black,
                 ),
                 prefixIcon: Icon(
                   Icons.account_circle,
-                  color: Color(0xFF212121),
+                  color: Colors.black,
                   size: 30,
                 ),
                 border: InputBorder.none,
@@ -107,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             margin: EdgeInsets.only(top: 20),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+              borderRadius: BorderRadius.all(Radius.circular(40)),
               color: Color(0xFFEEEEEE),
             ),
             padding: EdgeInsets.only(left: 10),
@@ -115,11 +109,11 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 labelText: 'Password',
                 labelStyle: TextStyle(
-                  color: Color(0xFF212121),
+                  color: Colors.black,
                 ),
                 prefixIcon: Icon(
                   Icons.vpn_key,
-                  color: Color(0xFF212121),
+                  color: Colors.black,
                   size: 30,
                 ),
                 border: InputBorder.none,
@@ -130,15 +124,15 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 50.0),
+            margin: const EdgeInsets.only(top: 80.0),
             child: SizedBox(
               width: double.infinity,
               height: 50,
               child: RaisedButton(
-                color: Color(0xFF303030),
+                color: Colors.black,
                 textColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20))
+                    borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
                 onPressed: () => _onSubmit(),
                 child: Text(
@@ -153,13 +147,13 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Container(
                 margin:
-                EdgeInsets.only(top: 10),
+                EdgeInsets.only(top: 40),
                 child: Text(
                   'Need a Login?',
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 5, top:10),
+                margin: const EdgeInsets.only(left: 5, top:40),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -183,52 +177,19 @@ class _LoginPageState extends State<LoginPage> {
     ),
   );
 
-  _refreshContactList() async {
-    List<User>  x = await _dbHelper.fetchUsers();
-
-    setState(() {
-      _users = x;
-    });
-  }
-
   _onSubmit()  {
     var form = _formKey.currentState;
 
     if (form.validate()) {
       form.save();
-       _dbHelper.getUserbyEmail(_user.username, _user.password)
+      _dbHelper.getUserbyEmail(_user.username, _user.password)
           .then((value) => _loginHandler(value, context));
 
       _dbHelper.fetchUsers();
 
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Login Failed')));
       form.reset();
     }
   }
-
-  _list() => Expanded(
-      child: Card(
-          margin: EdgeInsets.fromLTRB(20, 30, 20, 0),
-          child: ListView.builder(
-            padding: EdgeInsets.all(10.0),
-            itemBuilder: (context, index) {
-              return Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: Text(_users[index].username),
-                      subtitle: Text(_users[index].password),
-                    ),
-                    Divider(
-                        height: 5.0
-                    )
-                  ]
-              );
-            },
-            itemCount: _users.length,
-          )
-      )
-  );
 }
 
 Widget _textInput({controller, hint, icon}) {
@@ -264,12 +225,23 @@ _loginHandler(bool state, BuildContext context) async {
           context,
           MaterialPageRoute(builder: (context) => AdminHome())
       );
+      _displaySuccess(context, 'Admin Login Success!');
     }
     else {
       Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => gitHubSteps())
       );
+      _displaySuccess(context, 'User Login Success!');
     }
   }
+}
+
+_displaySuccess(BuildContext context, message) {
+  final snackBar = SnackBar(
+    content: Text(message),
+    backgroundColor: Colors.grey,
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

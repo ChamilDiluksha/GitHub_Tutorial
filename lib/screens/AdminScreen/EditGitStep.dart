@@ -5,7 +5,6 @@ import 'package:github_tutorial/Widgets/NavDrawer.dart';
 import 'package:github_tutorial/screens/AdminScreen/AdminHome.dart';
 
 class EditGitStep extends StatefulWidget {
-
   final Gitmodel gitmodel;
 
   const EditGitStep({this.gitmodel});
@@ -15,7 +14,6 @@ class EditGitStep extends StatefulWidget {
 }
 
 class _EditGitStepState extends State<EditGitStep> {
-
   final _formKey = GlobalKey<FormState>();
   DatabaseHelper _databaseHelper;
   final _ctrlCommand = TextEditingController();
@@ -33,38 +31,33 @@ class _EditGitStepState extends State<EditGitStep> {
   _SetData() {
     setState(() {
       _ctrlCommand.text = widget.gitmodel.command;
-      _ctrlDescription.text =  widget.gitmodel.description;
+      _ctrlDescription.text = widget.gitmodel.description;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Center(
-          child: Text(
-              "Add Git Steps",
-              style: TextStyle(
-                  color: Colors.white
-              )
-          ),
+          child:
+          Text("Update Git Steps", style: TextStyle(color: Colors.white)),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_outlined),
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context, AdminHome());
           },
         ),
       ),
       drawer: NavDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            _form(),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[_form()],
+          ),
         ),
       ),
     );
@@ -77,35 +70,56 @@ class _EditGitStepState extends State<EditGitStep> {
           key: _formKey,
           child: Column(
             children: <Widget>[
+              Image(
+                image: AssetImage("images/GitMasters.png"),
+                height: 125,
+                width: 125,
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+              ),
               TextFormField(
                 controller: _ctrlCommand,
-                decoration: InputDecoration(labelText: 'Git Command'),
+                decoration: InputDecoration(
+                    labelText: 'Git Command',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    fillColor: Colors.grey),
                 onSaved: (val) => setState(() => widget.gitmodel.command = val),
                 validator: (val) =>
                 (val.length == 0 ? 'This field is required' : null),
               ),
+              Container(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+              ),
               TextFormField(
                 controller: _ctrlDescription,
-                decoration: InputDecoration(labelText: 'Description'),
-                onSaved: (val) => setState(() => widget.gitmodel.description = val),
+                decoration: InputDecoration(
+                    labelText: 'Description',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    fillColor: Colors.grey),
+                maxLines: 20,
+                onSaved: (val) =>
+                    setState(() => widget.gitmodel.description = val),
                 validator: (val) =>
                 (val.length == 0 ? 'This field is required' : null),
               ),
               Container(
                 margin: EdgeInsets.all(10.0),
                 child: RaisedButton(
-                  onPressed: () => _onSubmit(),
-                  child: Text('Update'),
-                  color: Colors.black,
-                  textColor: Colors.white,
-                ),
+                    onPressed: () => _onSubmit(context),
+                    child: Text('UPDATE'),
+                    color: Colors.black,
+                    padding: EdgeInsets.only(left: 50, right: 50),
+                    textColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),
               ),
             ],
-          )
-      )
-  );
+          )));
 
-  _onSubmit() async {
+  _onSubmit(BuildContext context) async {
     var form = _formKey.currentState;
     if (form.validate()) {
       form.save();
@@ -113,6 +127,7 @@ class _EditGitStepState extends State<EditGitStep> {
         await _databaseHelper.insertCommands(widget.gitmodel);
       else
         await _databaseHelper.updateCommands(widget.gitmodel);
+      _displaySuccess(context);
       _resetForm();
     }
   }
@@ -124,5 +139,14 @@ class _EditGitStepState extends State<EditGitStep> {
       _ctrlDescription.clear();
       widget.gitmodel.id = null;
     });
+  }
+
+  _displaySuccess(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text("Successfully Updated"),
+      backgroundColor: Colors.grey,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

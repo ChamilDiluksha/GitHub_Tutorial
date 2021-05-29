@@ -4,9 +4,7 @@ import 'package:github_tutorial/Utils/DBHelper.dart';
 import 'package:github_tutorial/Widgets/NavDrawer.dart';
 import 'package:github_tutorial/screens/AdminScreen/EditGitStep.dart';
 
-
 class AdminHome extends StatefulWidget {
-
   const AdminHome({Key key}) : super(key: key);
 
   @override
@@ -14,8 +12,6 @@ class AdminHome extends StatefulWidget {
 }
 
 class _AdminHomeState extends State<AdminHome> {
-
-
   Gitmodel _gitmodel = Gitmodel();
   List<Gitmodel> _gitmodels = [];
   DatabaseHelper _databaseHelper;
@@ -36,11 +32,11 @@ class _AdminHomeState extends State<AdminHome> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text("Admin"),
       ),
       drawer: NavDrawer(),
@@ -49,8 +45,12 @@ class _AdminHomeState extends State<AdminHome> {
           _list(),
         ],
       ),
-
     );
+  }
+
+  _showSuccessfulDeletedAlert(BuildContext context) {
+    Scaffold.of(context)
+        .showSnackBar(SnackBar(content: Text('Git Step Deleted !!')));
   }
 
   _list() => Expanded(
@@ -81,16 +81,15 @@ class _AdminHomeState extends State<AdminHome> {
                         onPressed: () async {
                           await _databaseHelper
                               .deleteCommands(_gitmodels[index].id);
+                          _showSuccessfulDeletedAlert(context);
                           _refreshCommandList();
-                        }
-                        ),
+                        }),
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                             builder: (context) => EditGitStep(
-                              gitmodel : _gitmodels[index],
-                            )
-                        ),
+                              gitmodel: _gitmodels[index],
+                            )),
                       );
                     },
                   ),
@@ -101,7 +100,5 @@ class _AdminHomeState extends State<AdminHome> {
               );
             },
             itemCount: _gitmodels.length,
-          )
-      )
-  );
+          )));
 }
