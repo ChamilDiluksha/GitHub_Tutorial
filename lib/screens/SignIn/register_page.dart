@@ -32,26 +32,28 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height*0.3,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius:
-                BorderRadius.only(bottomLeft: Radius.circular(40)),
-              ),
-              child: Center(
-                child: Image.asset(
-                  "images/GitMasters.png",
-                  width: 120,
-                  height: 120,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height*0.3,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius:
+                  BorderRadius.only(bottomLeft: Radius.circular(40)),
+                ),
+                child: Center(
+                  child: Image.asset(
+                    "images/GitMasters.png",
+                    width: 120,
+                    height: 120,
+                  ),
                 ),
               ),
-            ),
-            _form(),
-          ],
+              _form(),
+            ],
+          ),
         ),
       ),
     );
