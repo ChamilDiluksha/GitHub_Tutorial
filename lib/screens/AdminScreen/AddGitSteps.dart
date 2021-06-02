@@ -35,7 +35,7 @@ class _addGitStepsState extends State<addGitSteps> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Center(
@@ -54,12 +54,14 @@ class _addGitStepsState extends State<addGitSteps> {
         ),
       ),
       drawer: NavDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            _form(),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              _form(),
+            ],
+          ),
         ),
       ),
     );
@@ -67,33 +69,63 @@ class _addGitStepsState extends State<addGitSteps> {
 
   _form() => Container(
       color: Colors.white,
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       child: Form(
           key: _formKey,
           child: Column(
             children: <Widget>[
-              TextFormField(
-                controller: _ctrlCommand,
-                decoration: InputDecoration(labelText: 'Git Command'),
-                onSaved: (val) => setState(() => _gitmodel.command = val),
-                validator: (val) =>
-                (val.length == 0 ? 'This field is required' : null),
+              Container(
+                child: new TextFormField (
+                  decoration: new InputDecoration(
+                      labelText: 'Git Command',
+                      border: new OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
+                        ),
+                      ),
+                      filled: true,
+                      hintStyle: new TextStyle(color: Colors.grey[800]),
+                      fillColor: Colors.grey[300]),
+                  onSaved: (val) => setState(() => _gitmodel.command = val),
+                  validator: (val) =>
+                  (val.length == 0 ? 'This field is required' : null),
+                ),
+                padding: new EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
               ),
-              TextFormField(
-                controller: _ctrlDescription,
-                decoration: InputDecoration(labelText: 'Description'),
-                onSaved: (val) => setState(() => _gitmodel.description = val),
-                validator: (val) =>
-                (val.length == 0 ? 'This field is required' : null),
+              Container(
+                child: new TextFormField (
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  minLines: 5,
+                  maxLines: 15,
+                  textAlign: TextAlign.start,
+                  decoration: new InputDecoration(
+                      labelText: 'Description',
+                      border: new OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
+                        ),
+                      ),
+                      filled: true,
+                      alignLabelWithHint: true,
+                      hintStyle: new TextStyle(color: Colors.grey[800]),
+                      fillColor: Colors.grey[300]),
+                  onSaved: (val) => setState(() => _gitmodel.description = val),
+                  validator: (val) =>
+                  (val.length == 0 ? 'This field is required' : null),
+                ),
+                padding: new EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
               ),
               Container(
                 margin: EdgeInsets.all(10.0),
                 child: RaisedButton(
-                  onPressed: () => _onSubmit(),
-                  child: Text('SUBMIT'),
-                  color: Colors.black,
-                  textColor: Colors.white,
-                ),
+                    onPressed: () => _onSubmit(),
+                    child: Text('SUBMIT'),
+                    color: Colors.black,
+                    padding: EdgeInsets.only(left: 50, right: 50),
+                    textColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),
               ),
             ],
           )
@@ -108,6 +140,7 @@ class _addGitStepsState extends State<addGitSteps> {
         await _databaseHelper.insertCommands(_gitmodel);
       else
         await _databaseHelper.updateCommands(_gitmodel);
+      _displaySuccess(context);
       _resetForm();
     }
   }
@@ -121,4 +154,33 @@ class _addGitStepsState extends State<addGitSteps> {
     });
   }
 
+  _displaySuccess(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () => {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AdminHome())
+        ) },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("The Record Added"),
+      content: Text("The new Git Command is Added Successfully!!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
+  }
 }

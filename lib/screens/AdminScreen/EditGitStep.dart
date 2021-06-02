@@ -145,6 +145,15 @@ class _EditGitStepState extends State<EditGitStep> {
     final snackBar = SnackBar(
       content: Text("Successfully Updated"),
       backgroundColor: Colors.black,
+      action: SnackBarAction(
+        label: 'Ok',
+        onPressed: () => {
+          Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AdminHome())
+          ),
+        },
+      ),
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
